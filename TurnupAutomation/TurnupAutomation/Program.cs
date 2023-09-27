@@ -92,6 +92,7 @@ editbutton.Click();
 //Edit the type code to material from time
 IWebElement editTypecode = cdriver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[1]"));
 editTypecode.Click();
+Thread.Sleep(1000);
 
 IWebElement edit1Typecode = cdriver.FindElement(By.XPath("//*[@id=\"TypeCode_listbox\"]/li[1]"));
 edit1Typecode.Click();
@@ -140,4 +141,23 @@ else
     Console.WriteLine("no record edited");
 }
 
-//delete the last created record 
+//Delete the last created record
+IWebElement deletebutton = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]"));
+deletebutton.Click();
+cdriver.SwitchTo().Alert().Accept();
+
+//Check if the record is deleted
+IWebElement endpgbutton = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+endpgbutton.Click();
+
+Thread.Sleep(2000);
+
+IWebElement deletedrecord = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+if (deletedrecord.Text == "Edited code")
+{
+    Console.WriteLine("no record deleted");
+}
+else
+{
+    Console.WriteLine("record has been deleted successfully");
+}
