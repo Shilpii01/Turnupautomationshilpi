@@ -30,3 +30,56 @@ else
 {
     Console.WriteLine("Invalid Username/Password");
 }
+
+//Navigate to the administration dropdown 
+IWebElement administrationdropdown = cdriver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a"));
+administrationdropdown.Click();
+
+//Select time & materials module 
+IWebElement timematerialoption = cdriver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/ul/li[3]/a"));
+timematerialoption.Click();
+
+//Click on the Create new button for creating a new record in the time & materials module
+IWebElement createnewbutton = cdriver.FindElement(By.XPath("//*[@id=\"container\"]/p/a"));
+createnewbutton.Click();
+
+//Select the type code 
+
+IWebElement tnmoption = cdriver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span"));
+tnmoption.Click();
+
+IWebElement tmoption = cdriver.FindElement(By.XPath("//*[@id=\"TypeCode_listbox\"]/li[2]"));
+tmoption.Click();
+
+//Enter the code in the Code textbox
+IWebElement codetxtbox = cdriver.FindElement(By.Id("Code"));
+codetxtbox.SendKeys("New record");
+
+// Enter description in the description textbox
+IWebElement descriptiontxtbox = cdriver.FindElement(By.Id("Description"));
+descriptiontxtbox.SendKeys("data new record");
+
+//Enter the price per unit for the new record
+IWebElement pricetxtbox = cdriver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
+pricetxtbox.SendKeys("321.45");
+
+//Click on the Save button 
+IWebElement savebutton = cdriver.FindElement(By.Id("SaveButton"));
+savebutton.Click();
+
+Thread.Sleep(6000);
+
+//Check whether the new record is created successfully 
+IWebElement lastpagebutton = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+lastpagebutton.Click();
+
+IWebElement newrecord = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+if (newrecord.Text == "New record")
+{
+    Console.WriteLine("User has been created successfully");
+}
+else
+{
+    Console.WriteLine("no record created");
+}
+
