@@ -1,9 +1,5 @@
-﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 
 namespace TurnupAutomation.Pages
 {
@@ -48,18 +44,18 @@ namespace TurnupAutomation.Pages
             lastpagebutton.Click();
 
             IWebElement newrecord = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-            if (newrecord.Text == "New record")
             {
-                Console.WriteLine("User has been created successfully");
-            }
-            else
-            {
-                Console.WriteLine("no record created");
+                Assert.That(newrecord.Text == "New record", "No record found");
+
             }
         }
 
-        public void EditTimeRecord(IWebDriver cdriver) 
+        public void EditTimeRecord(IWebDriver cdriver)
         {
+           // Go to last Page 
+           IWebElement lastpagebutton = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+            lastpagebutton.Click();
+
             //Edit the new created record
             IWebElement editbutton = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
             editbutton.Click();
@@ -100,26 +96,38 @@ namespace TurnupAutomation.Pages
             IWebElement editsavebutton = cdriver.FindElement(By.Id("SaveButton"));
             editsavebutton.Click();
 
-            Thread.Sleep(6000);
+            Thread.Sleep(4000);
 
             //Check if the last record is edited successfully 
             IWebElement endpagebutton = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
             endpagebutton.Click();
 
             IWebElement editedrecord = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-            if (editedrecord.Text == "Edited code")
             {
-                Console.WriteLine("User has been edited successfully");
+                Assert.That(editedrecord.Text == "Edited code", "record has not been edited");
             }
-            else
-            {
-                Console.WriteLine("no record edited");
-            }
+            
+            
+            //if (editedrecord.Text == "Edited code")
+            //{
+            //    Assert.Pass("Record edited successfully");
+            //}
+            //else
+            //{
+            //    Assert.Fail("record has not been edited");
+            //}
 
         }
 
-        public void DeleteTimeRecord(IWebDriver cdriver) 
+
+    
+
+        public void DeleteTimeRecord(IWebDriver cdriver)
         {
+            // Go to last Page 
+            IWebElement lastpagebutton = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+            lastpagebutton.Click();
+
             //Delete the last created record
             IWebElement deletebutton = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]"));
             deletebutton.Click();
@@ -132,14 +140,11 @@ namespace TurnupAutomation.Pages
             Thread.Sleep(2000);
 
             IWebElement deletedrecord = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-            if (deletedrecord.Text == "Edited code")
             {
-                Console.WriteLine("no record deleted");
-            }
-            else
-            {
-                Console.WriteLine("record has been deleted successfully");
+                Assert.That(deletedrecord.Text != "Edited code", "record has not been deleted ");
             }
         }
     }
 }
+     
+

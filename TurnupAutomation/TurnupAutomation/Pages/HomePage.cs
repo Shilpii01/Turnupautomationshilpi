@@ -1,9 +1,5 @@
-﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 
 namespace TurnupAutomation.Pages
 {
@@ -26,14 +22,12 @@ namespace TurnupAutomation.Pages
         {
             //Verify if the user has logged in successfully
             IWebElement helloHari = cdriver.FindElement(By.XPath("//*[@id=\"logoutForm\"]/ul/li/a"));
-            if (helloHari.Text == "Hello hari!")
-            {
-                Console.WriteLine("User has logged in successfully");
-            }
-            else
-            {
-                Console.WriteLine("Invalid Username/Password");
-            }
+            
+                Assert.That( helloHari.Text == "Hello hari!", "Invalid Username/Password");
+                    
+                
+            
+           
 
         }
     }
